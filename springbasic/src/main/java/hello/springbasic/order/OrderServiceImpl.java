@@ -1,15 +1,19 @@
 package hello.springbasic.order;
 
+import hello.springbasic.annotation.MainDiscountPolicy;
 import hello.springbasic.discount.DiscountPolicy;
 import hello.springbasic.discount.FixDiscountPolicy;
 import hello.springbasic.discount.RateDiscountPolicy;
 import hello.springbasic.member.Member;
 import hello.springbasic.member.MemberRepository;
 import hello.springbasic.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
+//@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository;
@@ -24,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     // 어떤 구현 객체가 주입될지 알 수 없다.
     // 오직 외부에서 결정
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
